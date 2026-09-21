@@ -4,7 +4,6 @@
     --wrong-color: #e74c3c;
     --bg-color: #f5f7fa;
     --card-bg: #ffffff;
-    --gold-gradient: linear-gradient(135deg, #ffe875 0%, #f1c40f 45%, #b7950b 80%, #7d6608 100%);
 }
 
 body {
@@ -26,7 +25,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: url('cover.png');
+    background-image: url('assets/game03.png'); /* تعديل المسار */
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -108,74 +107,46 @@ body {
     border: 1px solid rgba(255, 255, 255, 0.5);
 }
 
-/* مظهر العملة الأساسي */
+/* ================= مظهر العملات الأساسي (استخدام صور SVG) ================= */
 .coin {
-    width: 34px;
-    height: 34px;
-    border-radius: 50%;
+    width: 36px;
+    height: 36px;
     position: relative;
     box-sizing: border-box;
     transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    background: rgba(0, 0, 0, 0.08);
-    border: 2px solid rgba(0, 0, 0, 0.12);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-image: url('assets/gray.svg'); /* افتراضياً عملة رمادية فارغة */
+    opacity: 0.5;
 }
 
 .coin.gold {
-    background: var(--gold-gradient);
-    border: 1.5px solid #d4ac0d;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3), inset 0 1.5px 2px rgba(255, 255, 255, 0.8), inset 0 -1.5px 2.5px rgba(0, 0, 0, 0.5);
+    background-image: url('assets/gold.svg');
+    opacity: 1;
     transform: scale(1.15) rotateY(360deg);
-}
-.coin.gold::before {
-    content: ''; position: absolute; top: 12%; left: 12%; right: 12%; bottom: 12%; border-radius: 50%;
-    background: linear-gradient(135deg, #ffe066 0%, #f39c12 100%);
-    box-shadow: inset 0 1.5px 2px rgba(255, 255, 255, 0.8), 0 1.5px 2px rgba(0, 0, 0, 0.3);
-    border: 1px solid #b7950b;
-}
-.coin.gold::after, .coin.silver::after, .coin.bronze::after {
-    content: '✦'; position: absolute; color: #ffffff; font-size: 10px;
-    text-shadow: -21px 18px 0px #ffffff, 0 0 3px #ffffff, -21px 18px 3px #ffffff;
-    top: -2px; right: 1px; font-family: monospace; pointer-events: none; opacity: 0.95;
+    filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.2));
 }
 
 .coin.silver {
-    background: linear-gradient(135deg, #ffffff 0%, #e0e4ec 30%, #9aa0b0 70%, #5a606e 100%);
-    border: 1.5px solid #bdc3c7;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3), inset 0 1.5px 2px rgba(255, 255, 255, 0.95), inset 0 -1.5px 2.5px rgba(0, 0, 0, 0.5);
+    background-image: url('assets/silver.svg');
+    opacity: 1;
     transform: scale(1.1) rotateY(360deg);
-}
-.coin.silver::before {
-    content: ''; position: absolute; top: 12%; left: 12%; right: 12%; bottom: 12%; border-radius: 50%;
-    background: linear-gradient(135deg, #ffffff 0%, #dcdfe6 50%, #a6aebf 100%);
-    box-shadow: inset 0 1.5px 2px rgba(255, 255, 255, 0.9), 0 1.5px 2px rgba(0, 0, 0, 0.3);
-    border: 1px solid #95a5a6;
+    filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.2));
 }
 
 .coin.bronze {
-    background: linear-gradient(135deg, #f5b096 0%, #d35400 45%, #a04000 80%, #6e2c00 100%);
-    border: 1.5px solid #ba4a00;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3), inset 0 1.5px 2px rgba(255, 255, 255, 0.7), inset 0 -1.5px 2.5px rgba(0, 0, 0, 0.6);
+    background-image: url('assets/bronze.svg');
+    opacity: 1;
     transform: scale(1.08) rotateY(360deg);
-}
-.coin.bronze::before {
-    content: ''; position: absolute; top: 12%; left: 12%; right: 12%; bottom: 12%; border-radius: 50%;
-    background: linear-gradient(135deg, #edbb99 0%, #dc7633 100%);
-    box-shadow: inset 0 1.5px 2px rgba(255, 255, 255, 0.7), 0 1.5px 2px rgba(0, 0, 0, 0.3);
-    border: 1px solid #a04000;
+    filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.2));
 }
 
 .coin.matte-gray {
-    background: #797d7f;
-    border: 2px solid #5d6d7e;
-    box-shadow: inset 0 2px 4px rgba(0,0,0,0.4);
+    background-image: url('assets/gray.svg');
+    opacity: 0.9;
     transform: scale(1.0);
 }
-.coin.matte-gray::before {
-    content: ''; position: absolute; top: 12%; left: 12%; right: 12%; bottom: 12%; border-radius: 50%;
-    background: #979a9a;
-    border: 1px solid #5d6d7e;
-}
-.coin.matte-gray::after { content: none; }
 
 .container {
     max-width: 800px; width: 100%; background: var(--card-bg); padding: 30px;
@@ -255,8 +226,58 @@ p.instruction { text-align: center; color: #666; margin-bottom: 30px; font-size:
 
 .golden-key {
     font-size: 55px;
-    background: var(--gold-gradient);
-    -webkit-background-clip: text;
+    filter: drop-shadow(0px 4px 10px rgba(241, 196, 15, 0.7));
+    display: inline-block;
+    transform: rotate(-45deg);
+}
+
+@keyframes floatKey {
+    0% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-10px) rotate(3deg); }
+    100% { transform: translateY(0px) rotate(0deg); }
+}
+
+.code-box {
+    background: #f1f2f6;
+    border: 2px dashed #bdc3c7;
+    padding: 12px;
+    border-radius: 10px;
+    font-family: monospace;
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #2c3e50;
+    letter-spacing: 2px;
+    margin: 15px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.copy-btn {
+    background: #34495e;
+    color: white;
+    border: none;
+    padding: 6px 15px;
+    border-radius: 5px;
+    font-family: sans-serif;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.copy-btn:hover { background: #2c3e50; }
+
+.score-stats { margin: 20px 0; text-align: right; background: #f8f9fa; padding: 20px; border-radius: 15px; border: 1px solid #eef2f5; }
+.stat-item { font-size: 1.1rem; margin-bottom: 10px; color: #444; display: flex; justify-content: space-between; align-items: center;}
+.stat-item:last-child { margin-bottom: 0; }
+.stat-label { font-weight: bold; }
+.stat-value { font-family: monospace; font-size: 1.2rem; font-weight: bold; color: var(--primary-color); }
+
+.restart-game-btn {
+    background-color: #2ecc71; color: white; border: none; padding: 12px 45px;
+    font-size: 1.1rem; font-weight: bold; border-radius: 25px; cursor: pointer; transition: background 0.2s;
+}
+.restart-game-btn:hover { background-color: #27ae60; }
+    p: text;
     -webkit-text-fill-color: transparent;
     filter: drop-shadow(0px 4px 10px rgba(241, 196, 15, 0.7));
     display: inline-block;
