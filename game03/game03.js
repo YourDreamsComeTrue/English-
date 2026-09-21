@@ -1,21 +1,49 @@
-// بيانات الدرس والنص والكلمات
+// بيانات الدرس والكلمات
 const gameData = {
-    // الكلمات الصحيحة للفراغات بالترتيب (من 1 إلى 11)
+    // الكلمات الصحيحة للفراغات بالترتيب (من 1 إلى 15)
     correctAnswers: [
-        "كلمة 1", "كلمة 2", "كلمة 3", "كلمة 4", "كلمة 5", "كلمة 6", 
-        "كلمة 7", "كلمة 8", "كلمة 9", "كلمة 10", "كلمة 11"
+        "supplies",
+        "backpack",
+        "book",
+        "notebook",
+        "scissors",
+        "glue",
+        "pencil case",
+        "tape",
+        "backpack",
+        "pencils",
+        "pens",
+        "eraser",
+        "highlighter",
+        "ruler",
+        "color",
+        "pencils"
     ],
+
     // الخيارات التي ستظهر للاعب في النافذة المنبثقة
     baseWordOptions: [
-        "كلمة 1", "كلمة 2", "كلمة 3", "كلمة 4", "كلمة 5", "كلمة 6", 
-        "كلمة 7", "كلمة 8", "كلمة 9", "كلمة 10", "كلمة 11"
+        "supplies", "backpack", "book", "notebook",
+        "scissors", "glue", "tape", "pencil case",
+        "pencils", "pens", "eraser", "highlighter",
+        "ruler", "color", "pencils"
     ],
+
     // نص الفقرة الرئيسي مع الفراغات
     paragraphHTML: `
-        هذا النص يمثل قالب تجريبي. هنا نضع الفراغ الأول <span class="blank" data-index="0"></span>، يليه شرح بسيط وتوضيح للفراغ الثاني <span class="blank" data-index="1"></span>. اللعبة تستوعب حتى إحدى عشر فراغاً تجريبياً. هنا الفراغ الثالث <span class="blank" data-index="2"></span>، ثم الفراغ الرابع <span class="blank" data-index="3"></span>، ثم الفراغ الخامس <span class="blank" data-index="4"></span>.
-        <br><br>
-        في هذا المقطع نتابع استعراض القالب الخام مع الفراغ السادس <span class="blank" data-index="5"></span>، ومعه الفراغ السابع الموالي <span class="blank" data-index="6"></span>. يمكن لأي شخص استبدال هذا النص كاملاً بنصه الخاص بالفراغات المطلوبة. هنا الفراغ الثامن <span class="blank" data-index="7"></span>، والكلمة المناسبة للفراغ التاسع <span class="blank" data-index="8"></span>.
-        <br><br>
-        أخيراً، نختم القالب بالفراغ العاشر <span class="blank" data-index="9"></span>، والفراغ الحادي عشر والأخير <span class="blank" data-index="10"></span>. بعد كتابة النص وتوزيعه يمكن ضبط الكلمات والخيارات بسهولة تامة من كود الجافا سكربت المرفق.
+        School <span class="blank" data-index="0"></span><br><br>
+        What's in your <span class="blank" data-index="1"></span>?<br>
+        It's my <span class="blank" data-index="2"></span>. I can read.<br>
+        It's my <span class="blank" data-index="3"></span>. I can write on it.<br>
+        These are my <span class="blank" data-index="4"></span>. I can cut the paper.<br>
+        It's my <span class="blank" data-index="5"></span>. I can stick them with it.<br>
+        It's my <span class="blank" data-index="6"></span>. I can put them with it.<br>
+        Is this your <span class="blank" data-index="7"></span>? Yes, it is.<br><br>
+        What's in your <span class="blank" data-index="8"></span>?<br>
+        These are my <span class="blank" data-index="9"></span> and <span class="blank" data-index="10"></span>. I like to write.<br>
+        It's my <span class="blank" data-index="11"></span>. I can erase and write again.<br>
+        It's my <span class="blank" data-index="12"></span>. I can mark with it.<br>
+        It is my <span class="blank" data-index="13"></span>. I like to measure.<br>
+        These are my <span class="blank" data-index="14"></span> <span class="blank" data-index="15"></span>. I can draw a rainbow.<br><br>
+        There are things for school in my backpack.
     `
 };
