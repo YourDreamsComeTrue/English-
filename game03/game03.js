@@ -1,6 +1,6 @@
 // بيانات الدرس والكلمات
 const gameData = {
-    // الكلمات الصحيحة للفراغات بالترتيب من 0 إلى 12 (إجمالي 13 فراغاً بدون تكرار)
+    // الكلمات الصحيحة للفراغات بالترتيب من 0 إلى 12 (إجمالي 13 فراغاً)
     correctAnswers: [
         "supplies",
         "book",
@@ -17,7 +17,7 @@ const gameData = {
         "color pencils"
     ],
 
-    // الخيارات الفريدة التي ستظهر للاعب في النافذة المنبثقة
+    // الخيارات الفريدة التي ستظهر للاعب في النافذة المنبثقة (13 خياراً)
     baseWordOptions: [
         "supplies",
         "book",
@@ -34,7 +34,7 @@ const gameData = {
         "color pencils"
     ],
 
-    // نص الفقرة الرئيسي مدمج في 12 عبارة مرقمة
+    // نص الفقرة الرئيسي مع ترقيم الجمل وتطابق دقيق لأرقام data-index من 0 إلى 12
     paragraphHTML: `
         1. School <span class="blank" data-index="0"></span>.<br><br>
         2. It's my <span class="blank" data-index="1"></span>. I can read.<br><br>
