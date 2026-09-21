@@ -25,7 +25,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: url('assets/game03.png'); /* تعديل المسار */
+    background-image: url('assets/game03.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -105,19 +105,21 @@ body {
     align-items: center;
     box-sizing: border-box;
     border: 1px solid rgba(255, 255, 255, 0.5);
+    flex-wrap: wrap; /* للسماح بالتفاف العملات الـ 16 بشياكة */
+    gap: 5px;
 }
 
-/* ================= مظهر العملات الأساسي (استخدام صور SVG) ================= */
+/* ================= مظهر العملات الأساسي (SVG) ================= */
 .coin {
-    width: 36px;
-    height: 36px;
+    width: 32px;
+    height: 32px;
     position: relative;
     box-sizing: border-box;
     transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
-    background-image: url('assets/gray.svg'); /* افتراضياً عملة رمادية فارغة */
+    background-image: url('assets/gray.svg');
     opacity: 0.5;
 }
 
@@ -149,70 +151,258 @@ body {
 }
 
 .container {
-    max-width: 800px; width: 100%; background: var(--card-bg); padding: 30px;
-    border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); margin-bottom: 20px; box-sizing: border-box;
+    max-width: 800px;
+    width: 100%;
+    background: var(--card-bg);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+    box-sizing: border-box;
+    text-align: left;
 }
 
-p.instruction { text-align: center; color: #666; margin-bottom: 30px; font-size: 1rem; }
-.paragraph-box { font-size: 1.25rem; line-height: 2.5; color: #444; text-align: justify; margin-bottom: 30px; }
+/* ================= تعليمة الإنجليزية المظللة ================= */
+p.instruction {
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #2c3e50;
+    background-color: #e8f4f8; /* تظليل بارز ولطيف */
+    border-left: 5px solid #3498db;
+    padding: 12px 20px;
+    border-radius: 8px;
+    margin-bottom: 25px;
+    display: block;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
 
+/* ================= صندوق النص (اتجاه إنجليزي LTR) ================= */
+.paragraph-box {
+    font-size: 1.25rem;
+    line-height: 2.5;
+    color: #444;
+    text-align: left !important;
+    direction: ltr !important;
+    margin-bottom: 30px;
+}
+
+/* ================= الفراغات (بدون أرقام/كلمات داخلية) ================= */
 .blank {
-    display: inline-block; min-width: 100px; height: 32px; border-bottom: 2px dashed var(--primary-color);
-    margin: 0 8px; text-align: center; line-height: 32px; font-weight: bold; color: var(--primary-color);
-    cursor: pointer; transition: all 0.2s ease; background-color: rgba(74, 144, 226, 0.05);
-    border-radius: 6px; padding: 0 10px; vertical-align: middle; scroll-margin-top: 120px;
+    display: inline-block;
+    min-width: 100px;
+    height: 32px;
+    border-bottom: 2px dashed var(--primary-color);
+    margin: 0 6px;
+    text-align: center;
+    line-height: 32px;
+    font-weight: bold;
+    color: var(--primary-color);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background-color: rgba(74, 144, 226, 0.05);
+    border-radius: 6px;
+    padding: 0 10px;
+    vertical-align: middle;
+    scroll-margin-top: 120px;
 }
-.blank:hover { background-color: rgba(74, 144, 226, 0.15); transform: scale(1.03); }
-.blank.correct { color: #fff !important; background-color: var(--correct-color) !important; border-bottom-color: var(--correct-color) !important; transform: none !important; }
-.blank.wrong { color: #fff !important; background-color: var(--wrong-color) !important; border-bottom-color: var(--wrong-color) !important; transform: none !important; }
 
-.buttons-container { display: flex; justify-content: center; gap: 15px; margin-top: 30px; }
+.blank:hover {
+    background-color: rgba(74, 144, 226, 0.15);
+    transform: scale(1.03);
+}
+
+.blank.correct {
+    color: #fff !important;
+    background-color: var(--correct-color) !important;
+    border-bottom-color: var(--correct-color) !important;
+    transform: none !important;
+}
+
+.blank.wrong {
+    color: #fff !important;
+    background-color: var(--wrong-color) !important;
+    border-bottom-color: var(--wrong-color) !important;
+    transform: none !important;
+}
+
+.buttons-container {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 30px;
+}
+
 .submit-btn, .retry-btn {
-    background-color: var(--primary-color); color: white; border: none; padding: 14px 60px;
-    font-size: 1.2rem; font-weight: bold; border-radius: 30px; cursor: pointer; transition: all 0.3s ease;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 14px 60px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.3s ease;
     box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3);
 }
-.submit-btn:hover, .retry-btn:hover { background-color: #357abd; transform: translateY(-2px); }
-.submit-btn:disabled { background-color: #cccccc; cursor: not-allowed; box-shadow: none; transform: none; }
-.retry-btn { background-color: #f39c12; box-shadow: 0 4px 15px rgba(243, 156, 18, 0.3); display: none; }
-.retry-btn:hover { background-color: #d68910; }
 
-/* نافذة اختيار الكلمات (Modal) */
+.submit-btn:hover, .retry-btn:hover {
+    background-color: #357abd;
+    transform: translateY(-2px);
+}
+
+.submit-btn:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+}
+
+.retry-btn {
+    background-color: #f39c12;
+    box-shadow: 0 4px 15px rgba(243, 156, 18, 0.3);
+    display: none;
+}
+
+.retry-btn:hover {
+    background-color: #d68910;
+}
+
+/* ================= نافذة اختيار الكلمات (Modal) ================= */
 .modal-overlay {
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.4);
-    backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center;
-    opacity: 0; pointer-events: none; transition: opacity 0.3s ease; z-index: 9999;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 9999;
 }
-.modal-overlay.active { opacity: 1; pointer-events: auto; }
-.modal-content {
-    background: rgba(255, 255, 255, 0.9); border: 1px solid rgba(255, 255, 255, 0.4);
-    border-radius: 20px; padding: 25px; max-width: 550px; width: 90%; box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
-    text-align: center; transform: scale(0.9); transition: transform 0.3s ease;
-}
-.modal-overlay.active .modal-content { transform: scale(1); }
-.modal-title { margin-top: 0; color: #333; font-size: 1.3rem; margin-bottom: 20px; }
-.words-grid { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-bottom: 20px; }
-.word-option {
-    background: rgba(74, 144, 226, 0.1); border: 1px solid rgba(74, 144, 226, 0.3); color: var(--primary-color);
-    padding: 10px 20px; font-size: 1.05rem; font-weight: 600; border-radius: 25px; cursor: pointer; transition: all 0.2s ease;
-}
-.word-option:hover { background: rgba(74, 144, 226, 0.2); transform: translateY(-2px); }
-.close-modal-btn { background: #e74c3c; color: white; border: none; padding: 8px 20px; border-radius: 20px; cursor: pointer; font-weight: bold; font-size: 0.9rem; transition: background 0.2s; }
-.close-modal-btn:hover { background: #c0392b; }
 
-/* نافذة التقييم النهائي والمفتاح الذهبي */
+.modal-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.modal-content {
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 20px;
+    padding: 25px;
+    max-width: 550px;
+    width: 90%;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+    text-align: center;
+    transform: scale(0.9);
+    transition: transform 0.3s ease;
+    direction: ltr;
+}
+
+.modal-overlay.active .modal-content {
+    transform: scale(1);
+}
+
+.modal-title {
+    margin-top: 0;
+    color: #333;
+    font-size: 1.3rem;
+    margin-bottom: 20px;
+}
+
+.words-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.word-option {
+    background: rgba(74, 144, 226, 0.1);
+    border: 1px solid rgba(74, 144, 226, 0.3);
+    color: var(--primary-color);
+    padding: 10px 20px;
+    font-size: 1.05rem;
+    font-weight: 600;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.word-option:hover {
+    background: rgba(74, 144, 226, 0.2);
+    transform: translateY(-2px);
+}
+
+.close-modal-btn {
+    background: #e74c3c;
+    color: white;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 0.9rem;
+    transition: background 0.2s;
+}
+
+.close-modal-btn:hover {
+    background: #c0392b;
+}
+
+/* ================= نافذة التقييم النهائي والمفتاح الذهبي ================= */
 .score-modal-overlay {
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.6);
-    backdrop-filter: blur(10px); display: flex; align-items: center; justify-content: center;
-    opacity: 0; pointer-events: none; transition: opacity 0.4s ease; z-index: 10000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+    z-index: 10000;
 }
-.score-modal-overlay.active { opacity: 1; pointer-events: auto; }
+
+.score-modal-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
 .score-card {
-    background: white; padding: 35px; border-radius: 25px; max-width: 500px; width: 90%;
-    text-align: center; box-shadow: 0 20px 45px rgba(0,0,0,0.2); transform: translateY(30px); transition: transform 0.4s ease;
+    background: white;
+    padding: 35px;
+    border-radius: 25px;
+    max-width: 500px;
+    width: 90%;
+    text-align: center;
+    box-shadow: 0 20px 45px rgba(0,0,0,0.2);
+    transform: translateY(30px);
+    transition: transform 0.4s ease;
+    direction: ltr;
 }
-.score-modal-overlay.active .score-card { transform: translateY(0); }
-.score-title { color: #2ecc71; font-size: 2rem; margin-top: 0; margin-bottom: 10px; }
+
+.score-modal-overlay.active .score-card {
+    transform: translateY(0);
+}
+
+.score-title {
+    color: #2ecc71;
+    font-size: 2rem;
+    margin-top: 0;
+    margin-bottom: 10px;
+}
 
 .key-container {
     margin: 20px auto;
@@ -264,70 +454,56 @@ p.instruction { text-align: center; color: #666; margin-bottom: 30px; font-size:
     cursor: pointer;
     transition: background 0.2s;
 }
-.copy-btn:hover { background: #2c3e50; }
 
-.score-stats { margin: 20px 0; text-align: right; background: #f8f9fa; padding: 20px; border-radius: 15px; border: 1px solid #eef2f5; }
-.stat-item { font-size: 1.1rem; margin-bottom: 10px; color: #444; display: flex; justify-content: space-between; align-items: center;}
-.stat-item:last-child { margin-bottom: 0; }
-.stat-label { font-weight: bold; }
-.stat-value { font-family: monospace; font-size: 1.2rem; font-weight: bold; color: var(--primary-color); }
-
-.restart-game-btn {
-    background-color: #2ecc71; color: white; border: none; padding: 12px 45px;
-    font-size: 1.1rem; font-weight: bold; border-radius: 25px; cursor: pointer; transition: background 0.2s;
-}
-.restart-game-btn:hover { background-color: #27ae60; }
-    p: text;
-    -webkit-text-fill-color: transparent;
-    filter: drop-shadow(0px 4px 10px rgba(241, 196, 15, 0.7));
-    display: inline-block;
-    transform: rotate(-45deg);
+.copy-btn:hover {
+    background: #2c3e50;
 }
 
-@keyframes floatKey {
-    0% { transform: translateY(0px) rotate(0deg); }
-    50% { transform: translateY(-10px) rotate(3deg); }
-    100% { transform: translateY(0px) rotate(0deg); }
+.score-stats {
+    margin: 20px 0;
+    text-align: left;
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 15px;
+    border: 1px solid #eef2f5;
 }
 
-.code-box {
-    background: #f1f2f6;
-    border: 2px dashed #bdc3c7;
-    padding: 12px;
-    border-radius: 10px;
-    font-family: monospace;
-    font-size: 1.3rem;
-    font-weight: bold;
-    color: #2c3e50;
-    letter-spacing: 2px;
-    margin: 15px 0;
+.stat-item {
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+    color: #444;
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-.copy-btn {
-    background: #34495e;
+.stat-item:last-child {
+    margin-bottom: 0;
+}
+
+.stat-label {
+    font-weight: bold;
+}
+
+.stat-value {
+    font-family: monospace;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+.restart-game-btn {
+    background-color: #2ecc71;
     color: white;
     border: none;
-    padding: 6px 15px;
-    border-radius: 5px;
-    font-family: sans-serif;
-    font-size: 0.85rem;
+    padding: 12px 45px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border-radius: 25px;
     cursor: pointer;
     transition: background 0.2s;
 }
-.copy-btn:hover { background: #2c3e50; }
 
-.score-stats { margin: 20px 0; text-align: right; background: #f8f9fa; padding: 20px; border-radius: 15px; border: 1px solid #eef2f5; }
-.stat-item { font-size: 1.1rem; margin-bottom: 10px; color: #444; display: flex; justify-content: space-between; align-items: center;}
-.stat-item:last-child { margin-bottom: 0; }
-.stat-label { font-weight: bold; }
-.stat-value { font-family: monospace; font-size: 1.2rem; font-weight: bold; color: var(--primary-color); }
-
-.restart-game-btn {
-    background-color: #2ecc71; color: white; border: none; padding: 12px 45px;
-    font-size: 1.1rem; font-weight: bold; border-radius: 25px; cursor: pointer; transition: background 0.2s;
-}
-.restart-game-btn:hover { background-color: #27ae60; }
-  
+.restart-game-btn:hover {
+    background-color: #27ae60;
+    }
