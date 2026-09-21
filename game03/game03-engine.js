@@ -7,12 +7,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const correctAnswers = gameData.correctAnswers;
     const baseWordOptions = gameData.baseWordOptions;
+    const totalBlanks = correctAnswers.length; // حساب عدد الفراغات تلقائياً بناءً على البيانات
 
-    const userAnswers = Array(11).fill(""); 
+    const userAnswers = Array(totalBlanks).fill(""); 
     let currentShuffledOptions = []; 
     let selectedBlankIndex = null; 
 
-    const coinStates = Array(11).fill(0); 
+    const coinStates = Array(totalBlanks).fill(0); 
     let attemptCount = 1; 
 
     const coinsBar = document.getElementById('coinsBar');
@@ -43,16 +44,20 @@ document.addEventListener("DOMContentLoaded", () => {
     const startPlayBtn = document.getElementById('startPlayBtn');
     const gameWrapper = document.getElementById('gameWrapper');
 
-    startPlayBtn.addEventListener('click', () => {
-        backgroundMusic.play().catch(e => console.log("ملف background.mp3 غير موجود، أو يحتاج لتفاعل أولاً"));
-        
-        welcomeScreen.classList.add('fade-out');
-        
-        setTimeout(() => {
-            welcomeScreen.style.display = 'none';
-            gameWrapper.classList.add('fade-in');
-        }, 800);
-    });
+    if (startPlayBtn) {
+        startPlayBtn.addEventListener('click', () => {
+            if (backgroundMusic) {
+                backgroundMusic.play().catch(e => console.log("ملف background.mp3 غير موجود، أو يحتاج لتفاعل أولاً"));
+            }
+            
+            welcomeScreen.classList.add('fade-out');
+            
+            setTimeout(() => {
+                welcomeScreen.style.display = 'none';
+                gameWrapper.classList.add('fade-in');
+            }, 800);
+        });
+    }
 
     function shuffleArray(array) {
         let shuffled = [...array];
@@ -65,7 +70,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function updateCoinsUI() {
         coinsBar.innerHTML = '';
-        for (let i = 0; i < 11; i++) {
+        for (let i = 0; i < totalBlanks; i++) {
             const coin = document.createElement('div');
             coin.id = `coin-${i}`;
             
@@ -90,7 +95,7 @@ document.addEventListener("DOMContentLoaded", () => {
             attemptCount = 1;
             updateCoinsUI();
         } else {
-            for (let i = 0; i < 11; i++) {
+            for (let i = 0; i < totalBlanks; i++) {
                 if (coinStates[i] === 0) {
                     userAnswers[i] = "";
                 }
@@ -107,8 +112,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 blank.className = "blank correct";
                 blank.style.pointerEvents = 'none'; 
             } else {
-                blank.textContent = `فراغ ${idx + 1}`;
-                blank.style.color = "rgba(74, 144, 226, 0.4)"; 
+                blank.textContent = ""; // ترك الفراغ فارغاً بدون كلمة "فراغ"
+                blank.style.color = "var(--primary-color)"; 
                 blank.style.borderBottom = "2px dashed var(--primary-color)";
                 blank.style.backgroundColor = "rgba(74, 144, 226, 0.05)";
                 blank.className = "blank"; 
@@ -123,13 +128,13 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function playExternalSound(type) {
-        if (type === 'correct') {
+        if (type === 'correct' && audioCorrect) {
             audioCorrect.currentTime = 0;
             audioCorrect.play().catch(e => console.log("correct.mp3 غير موجود"));
-        } else if (type === 'wrong') {
+        } else if (type === 'wrong' && audioWrong) {
             audioWrong.currentTime = 0;
             audioWrong.play().catch(e => console.log("wrong.mp3 غير موجود"));
-        } else if (type === 'drop') {
+        } else if (type === 'drop' && audioDrop) {
             audioDrop.currentTime = 0;
             audioDrop.play().catch(e => console.log("drop.mp3 غير موجود"));
         }
@@ -153,7 +158,7 @@ document.addEventListener("DOMContentLoaded", () => {
             clearBtn.style.background = 'rgba(231, 76, 60, 0.1)';
             clearBtn.style.color = '#e74c3c';
             clearBtn.style.borderColor = 'rgba(231, 76, 60, 0.3)';
-            clearBtn.textContent = 'إزالة الكلمة الحالية ✖';
+            clearBtn.textContent = 'Clear selection ✖';
             clearBtn.addEventListener('click', () => selectWord(""));
             wordsGrid.appendChild(clearBtn);
         }
@@ -181,8 +186,8 @@ document.addEventListener("DOMContentLoaded", () => {
         playExternalSound('drop'); 
 
         if (word === "") {
-            targetBlank.textContent = `فراغ ${selectedBlankIndex + 1}`;
-            targetBlank.style.color = "rgba(74, 144, 226, 0.4)";
+            targetBlank.textContent = ""; // إبقاء الفراغ خالي عند الإزالة
+            targetBlank.style.color = "var(--primary-color)";
             targetBlank.style.borderBottom = "2px dashed var(--primary-color)";
             targetBlank.style.backgroundColor = "rgba(74, 144, 226, 0.05)";
         } else {
@@ -203,7 +208,7 @@ document.addEventListener("DOMContentLoaded", () => {
         blanks.forEach(b => b.style.pointerEvents = 'none'); 
 
         const activeIndexes = [];
-        for (let i = 0; i < 11; i++) {
+        for (let i = 0; i < totalBlanks; i++) {
             if (coinStates[i] === 0) {
                 activeIndexes.push(i);
             }
@@ -278,25 +283,27 @@ document.addEventListener("DOMContentLoaded", () => {
         const bronzeCount = coinStates.filter(state => state === 3).length;
         const matteCount = coinStates.filter(state => state === 4).length;
 
-        resAttempts.textContent = attemptCount;
-        resGold.textContent = goldCount;
-        resSilver.textContent = silverCount;
-        resBronze.textContent = bronzeCount;
-        resMatte.textContent = matteCount;
+        if (resAttempts) resAttempts.textContent = attemptCount;
+        if (resGold) resGold.textContent = goldCount;
+        if (resSilver) resSilver.textContent = silverCount;
+        if (resBronze) resBronze.textContent = bronzeCount;
+        if (resMatte) resMatte.textContent = matteCount;
 
         const generatedCode = generateWinCode(goldCount, silverCount, bronzeCount, matteCount, attemptCount);
-        winCodeText.textContent = generatedCode;
+        if (winCodeText) winCodeText.textContent = generatedCode;
 
-        copyCodeBtn.onclick = function() {
-            navigator.clipboard.writeText(generatedCode).then(() => {
-                copyCodeBtn.textContent = "تم النسخ! ✓";
-                copyCodeBtn.style.background = "#2ecc71";
-                setTimeout(() => {
-                    copyCodeBtn.textContent = "نسخ 📋";
-                    copyCodeBtn.style.background = "#34495e";
-                }, 2000);
-            });
-        };
+        if (copyCodeBtn) {
+            copyCodeBtn.onclick = function() {
+                navigator.clipboard.writeText(generatedCode).then(() => {
+                    copyCodeBtn.textContent = "Copied! ✓";
+                    copyCodeBtn.style.background = "#2ecc71";
+                    setTimeout(() => {
+                        copyCodeBtn.textContent = "Copy 📋";
+                        copyCodeBtn.style.background = "#34495e";
+                    }, 2000);
+                });
+            };
+        }
 
         scoreModalOverlay.classList.add('active');
     }
@@ -313,4 +320,4 @@ document.addEventListener("DOMContentLoaded", () => {
 
     initGame(true);
 });
-  
+            
