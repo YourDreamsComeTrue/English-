@@ -1,6 +1,6 @@
 // بيانات الدرس والكلمات
 const gameData = {
-    // الكلمات الصحيحة للفراغات بالترتيب (من 1 إلى 15)
+    // الكلمات الصحيحة للفراغات بالترتيب من 0 إلى 15 (إجمالي 16 فراغاً)
     correctAnswers: [
         "supplies",
         "backpack",
@@ -20,15 +20,27 @@ const gameData = {
         "pencils"
     ],
 
-    // الخيارات التي ستظهر للاعب في النافذة المنبثقة
+    // الخيارات التي ستظهر للاعب في النافذة المنبثقة (تتضمن 16 كلمة مطابقة للإجابات المطلوبة)
     baseWordOptions: [
-        "supplies", "backpack", "book", "notebook",
-        "scissors", "glue", "tape", "pencil case",
-        "pencils", "pens", "eraser", "highlighter",
-        "ruler", "color", "pencils"
+        "supplies", 
+        "backpack", 
+        "book", 
+        "notebook",
+        "scissors", 
+        "glue", 
+        "pencil case", 
+        "tape",
+        "backpack", 
+        "pencils", 
+        "pens", 
+        "eraser",
+        "highlighter", 
+        "ruler", 
+        "color", 
+        "pencils"
     ],
 
-    // نص الفقرة الرئيسي مع الفراغات
+    // نص الفقرة الرئيسي مع الفراغات (من 0 إلى 15)
     paragraphHTML: `
         School <span class="blank" data-index="0"></span><br><br>
         What's in your <span class="blank" data-index="1"></span>?<br>
