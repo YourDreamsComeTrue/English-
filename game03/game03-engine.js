@@ -147,10 +147,26 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
+    // الدالة المعدلة للتعامل مع التكرارات بحساب العدد بدقة
     function openWordSelector() {
         wordsGrid.innerHTML = '';
+
+        // 1. جمع الكلمات المستعملة في باقي الفراغات
         const usedWords = userAnswers.filter((ans, idx) => idx !== selectedBlankIndex && ans !== "");
-        const availableWords = currentShuffledOptions.filter(word => !usedWords.includes(word));
+
+        // 2. عمل نسخة من خيارات الكلمات
+        let remainingOptions = [...currentShuffledOptions];
+
+        // 3. خصم نسخة واحدة من الكلمة مقابل كل استخدام لها
+        usedWords.forEach(usedWord => {
+            const indexToRemove = remainingOptions.indexOf(usedWord);
+            if (indexToRemove !== -1) {
+                remainingOptions.splice(indexToRemove, 1);
+            }
+        });
+
+        // 4. استخراج الخيارات المتاحة كقيم فريدة لعرض الأزرار
+        const availableUniqueWords = [...new Set(remainingOptions)];
 
         if (userAnswers[selectedBlankIndex] !== "") {
             const clearBtn = document.createElement('button');
@@ -163,7 +179,7 @@ document.addEventListener("DOMContentLoaded", () => {
             wordsGrid.appendChild(clearBtn);
         }
 
-        availableWords.forEach((word) => {
+        availableUniqueWords.forEach((word) => {
             const btn = document.createElement('button');
             btn.className = 'word-option';
             btn.textContent = word;
@@ -320,4 +336,4 @@ document.addEventListener("DOMContentLoaded", () => {
 
     initGame(true);
 });
-            
+        
