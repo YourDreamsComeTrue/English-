@@ -1,87 +1,88 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en" dir="ltr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>قالب لعبة الكلمات التفاعلية</title>
-    <!-- ربط ملف التصميم الخارجي -->
+    <title>Interactive Word Game</title>
+    <!-- External Style Sheet -->
     <link rel="stylesheet" href="game03-style.css">
 </head>
 <body>
 
-    <!-- صفحة البداية والترحيب -->
+    <!-- Welcome / Start Screen -->
     <div id="welcomeScreen">
-        <!-- الشريط السفلي الأسود الشفاف -->
+        <!-- Bottom Action Bar -->
         <div class="bottom-action-bar">
-            <button class="start-play-btn" id="startPlayBtn">ابدأ اللعب</button>
+            <button class="start-play-btn" id="startPlayBtn">Start Game</button>
         </div>
     </div>
 
-    <!-- لفافة اللعبة الأساسية -->
+    <!-- Main Game Wrapper -->
     <div class="game-wrapper" id="gameWrapper">
         <div class="coins-bar" id="coinsBar"></div>
 
         <div class="container">
-            <p class="instruction">اضغط على أي فراغ داخل النص لاختيار الكلمة المناسبة له.</p>
+            <p class="instruction">Click on any gap within the text to select the appropriate word.</p>
             
-            <!-- سيتم تحميل النص تلقائياً عبر الجافاسكربت -->
+            <!-- Paragraph content loaded dynamically via JavaScript -->
             <div class="paragraph-box" id="paragraph"></div>
 
             <div class="buttons-container">
-                <button class="submit-btn" id="submitBtn">تم</button>
-                <button class="retry-btn" id="retryBtn">إعادة اللعب ↻</button>
+                <button class="submit-btn" id="submitBtn">Submit</button>
+                <button class="retry-btn" id="retryBtn">Try Again ↻</button>
             </div>
         </div>
     </div>
 
-    <!-- نافذة اختيار الكلمات -->
+    <!-- Word Selector Modal -->
     <div class="modal-overlay" id="modalOverlay">
         <div class="modal-content">
-            <h3 class="modal-title">اختر الكلمة المناسبة لهذا الفراغ:</h3>
+            <h3 class="modal-title">Select the correct word for this gap:</h3>
             <div class="words-grid" id="wordsGrid"></div>
-            <button class="close-modal-btn" id="closeModalBtn">إلغاء</button>
+            <button class="close-modal-btn" id="closeModalBtn">Cancel</button>
         </div>
     </div>
 
-    <!-- نافذة التقييم النهائي والمفتاح الذهبي -->
+    <!-- Final Score & Golden Key Modal -->
     <div class="score-modal-overlay" id="scoreModalOverlay">
         <div class="score-card">
-            <h2 class="score-title">🏆 تهانينا يا بطل!</h2>
+            <h2 class="score-title">🏆 Congratulations Champion!</h2>
             
             <div class="key-container">
                 <span class="golden-key">🔑</span>
             </div>
             
             <p style="color:#2c3e50; font-size:1.15rem; font-weight:bold; margin: 10px 0;">
-                تهانينا، لقد حصلت على مفتاح يسمح لك بفتح اللعبة الموالية!
+                You have earned a key to unlock the next level!
             </p>
             
-            <p style="color:#666; font-size:0.95rem; margin-bottom:5px;">انسخ رمز الفوز التالي وأرسله للبوت لتفعيل اللعبة الثانية:</p>
+            <p style="color:#666; font-size:0.95rem; margin-bottom:5px;">Copy the code below and send it to the bot to activate the second game:</p>
             <div class="code-box">
-                <span id="winCode">G1-X92F</span>
-                <button class="copy-btn" id="copyCodeBtn">نسخ 📋</button>
+                <span id="winCode">WIN-CODE</span>
+                <button class="copy-btn" id="copyCodeBtn">Copy 📋</button>
             </div>
 
             <div class="score-stats">
-                <div class="stat-item"><span class="stat-label">عدد المحاولات الإجمالي:</span><span class="stat-value" id="resAttempts">0</span></div>
+                <div class="stat-item"><span class="stat-label">Total Attempts:</span><span class="stat-value" id="resAttempts">0</span></div>
                 <hr style="border:0; border-top:1px solid #eef2f5; margin:10px 0;">
-                <div class="stat-item"><span class="stat-label">🟡 عملات ذهبية:</span><span class="stat-value" id="resGold" style="color:#f1c40f;">0</span></div>
-                <div class="stat-item"><span class="stat-label">⚪ عملات فضية:</span><span class="stat-value" id="resSilver" style="color:#95a5a6;">0</span></div>
-                <div class="stat-item"><span class="stat-label">🟤 عملات برونزية:</span><span class="stat-value" id="resBronze" style="color:#e67e22;">0</span></div>
-                <div class="stat-item"><span class="stat-label">⚫ فراغات بدون عملة (رمادي):</span><span class="stat-value" id="resMatte" style="color:#797d7f;">0</span></div>
+                <div class="stat-item"><span class="stat-label">🟡 Gold Coins:</span><span class="stat-value" id="resGold" style="color:#f1c40f;">0</span></div>
+                <div class="stat-item"><span class="stat-label">⚪ Silver Coins:</span><span class="stat-value" id="resSilver" style="color:#95a5a6;">0</span></div>
+                <div class="stat-item"><span class="stat-label">🟤 Bronze Coins:</span><span class="stat-value" id="resBronze" style="color:#e67e22;">0</span></div>
+                <div class="stat-item"><span class="stat-label">⚫ Matte Gray (No Coin):</span><span class="stat-value" id="resMatte" style="color:#797d7f;">0</span></div>
             </div>
-            <button class="restart-game-btn" id="restartGameBtn">لعب مجدداً ↻</button>
+            <button class="restart-game-btn" id="restartGameBtn">Play Again ↻</button>
         </div>
     </div>
 
-    <!-- استدعاء ملفات الصوت الخارجية من مجلد assets -->
+    <!-- External Audio Elements -->
     <audio id="soundCorrect" src="assets/Correct.mp3" preload="auto"></audio>
     <audio id="soundWrong" src="assets/wrong.mp3" preload="auto"></audio>
     <audio id="soundDrop" src="assets/drop.mp3" preload="auto"></audio>
     <audio id="backgroundMusic" src="assets/background.mp3" preload="auto" loop></audio>
 
-    <!-- ربط ملفات الجافاسكربت بالترتيب المطلوب -->
+    <!-- JavaScript Files -->
     <script src="game03.js"></script>
     <script src="game03-engine.js"></script>
 </body>
-</html>
+    </html>
+    
