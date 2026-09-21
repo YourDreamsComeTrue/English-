@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>قالب لعبة الكلمات التفاعلية</title>
-    <!-- ربط ملف التصميم الخارجى -->
+    <!-- ربط ملف التصميم الخارجي -->
     <link rel="stylesheet" href="game03-style.css">
 </head>
 <body>
 
-    <!-- صفحة البداية والترحيب الخلفية cover.png -->
+    <!-- صفحة البداية والترحيب -->
     <div id="welcomeScreen">
         <!-- الشريط السفلي الأسود الشفاف -->
         <div class="bottom-action-bar">
@@ -74,15 +74,14 @@
         </div>
     </div>
 
-    <!-- استدعاء ملفات الصوت الخارجية -->
-    <audio id="soundCorrect" src="correct.mp3" preload="auto"></audio>
-    <audio id="soundWrong" src="wrong.mp3" preload="auto"></audio>
-    <audio id="soundDrop" src="drop.mp3" preload="auto"></audio>
-    <audio id="backgroundMusic" src="background.mp3" preload="auto" loop></audio>
+    <!-- استدعاء ملفات الصوت الخارجية من مجلد assets -->
+    <audio id="soundCorrect" src="assets/Correct.mp3" preload="auto"></audio>
+    <audio id="soundWrong" src="assets/wrong.mp3" preload="auto"></audio>
+    <audio id="soundDrop" src="assets/drop.mp3" preload="auto"></audio>
+    <audio id="backgroundMusic" src="assets/background.mp3" preload="auto" loop></audio>
 
     <!-- ربط ملفات الجافاسكربت بالترتيب المطلوب -->
     <script src="game03.js"></script>
     <script src="game03-engine.js"></script>
 </body>
 </html>
-
