@@ -3,20 +3,40 @@ let checkTimer = null;
 let currentIndex = 0;
 let segments = [];
 
+// استخراج اسم الدرس من الرابط
+function getLessonNameFromUrl() {
+    const urlParams = new URLSearchParams(window.location.search);
+    // إذا لم يتم تحديد درس في الرابط، سيتم اختيار الدرس الافتراضي
+    return urlParams.get('lesson') || 'game01-type01-l0000001';
+}
+
+// تحميل ملف الدرس ديناميكيًا
+function loadLessonScript(lessonName, callback) {
+    const script = document.createElement('script');
+    script.src = `game01/game01-lessons/${lessonName}.js`;
+    script.onload = callback;
+    script.onerror = () => {
+        document.getElementById('statusInfo').innerText = "خطأ: لم يتم العثور على الدرس المحدد";
+    };
+    document.head.appendChild(script);
+}
+
 function extractVideoId(url) {
     const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
     const match = url.match(regExp);
     return (match && match[2].length === 11) ? match[2] : url;
 }
 
-// تحميل API الخاص بـ YouTube iframe dynamic
-const tag = document.createElement('script');
-tag.src = "https://www.youtube.com/iframe_api";
-const firstScriptTag = document.getElementsByTagName('script')[0];
-firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+// بدء تحميل الدرس ثم تحميل YouTube API
+const currentLesson = getLessonNameFromUrl();
+loadLessonScript(currentLesson, () => {
+    const tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    const firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+});
 
 function onYouTubeIframeAPIReady() {
-    // جلب البيانات من كائن lessonData المعرف في game01.js
     segments = (typeof lessonData !== 'undefined' && lessonData.segments) ? lessonData.segments : [];
     const videoUrl = (typeof lessonData !== 'undefined' && lessonData.youtubeUrl) ? lessonData.youtubeUrl : "";
     const videoId = extractVideoId(videoUrl);
@@ -37,7 +57,6 @@ function onYouTubeIframeAPIReady() {
 
 function onPlayerReady(event) {
     document.getElementById('statusInfo').innerText = "جاهز";
-    // القفز تلقائياً لبداية أول مقطع عند التحميل
     if (segments.length > 0) {
         player.seekTo(segments[0][0], true);
     }
@@ -54,7 +73,6 @@ function onPlayerStateChange(event) {
     }
 }
 
-// فحص التوقيت ومراقبة نهاية المقطع الحالي
 function startMonitoring() {
     stopMonitoring();
     checkTimer = setInterval(() => {
@@ -63,7 +81,6 @@ function startMonitoring() {
         const currentTime = player.getCurrentTime();
         const [start, end] = segments[currentIndex];
 
-        // إذا تجاوز الوقت نهاية المقطع الحالي يتوقف تلقائياً
         if (currentTime >= end) {
             player.pauseVideo();
             player.seekTo(end, true);
@@ -76,7 +93,6 @@ function stopMonitoring() {
     if (checkTimer) clearInterval(checkTimer);
 }
 
-// تكرار المقطع الحالي فقط (من نقطة بدايته المحددة)
 function repeatCurrentSegment() {
     if (!player || segments.length === 0) return;
     const [start, end] = segments[currentIndex];
@@ -85,7 +101,6 @@ function repeatCurrentSegment() {
     document.getElementById('statusInfo').innerText = `إعادة المقطع الحالي: ${formatTime(start)} - ${formatTime(end)}`;
 }
 
-// الانتقال للمقطع التالي (والقفز لبدايته مباشرة)
 function goToNextSegment() {
     if (!player || segments.length === 0) return;
     if (currentIndex < segments.length - 1) {
@@ -98,7 +113,6 @@ function goToNextSegment() {
     }
 }
 
-// الانتقال للمقطع السابق (والقفز لبدايته مباشرة)
 function goToPreviousSegment() {
     if (!player || segments.length === 0) return;
     if (currentIndex > 0) {
@@ -153,4 +167,4 @@ function formatTime(seconds) {
     const mins = Math.floor(seconds / 60);
     const secs = Math.floor(seconds % 60);
     return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
-      }
+}
