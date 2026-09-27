@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>مشغل الدروس التفاعلي</title>
+    
+    <!-- ربط ملف التنسيقات الخارجية -->
+    <link rel="stylesheet" href="game01-style.css">
+
+    <!-- ربط ملف البيانات من المسار الجديد -->
+    <script src="game01/game01-lessons.js"></script>
+</head>
+<body>
+
+    <div class="player-container" id="playerContainer">
+        <div class="video-wrapper">
+            <div id="player"></div>
+        </div>
+
+        <div class="controls-bar">
+            <div class="status-info" id="statusInfo">جاري التحميل...</div>
+
+            <div class="buttons-group">
+                <button class="icon-btn" id="rotateBtn" onclick="toggleLandscape()" title="عرض أفقي">⛶</button>
+                <button class="icon-btn" id="nextBtn" onclick="goToNextSegment()" title="المقطع التالي">▶</button>
+                <button class="icon-btn" id="repeatBtn" onclick="repeatCurrentSegment()" title="إعادة المقطع الحالي">🔄</button>
+                <button class="icon-btn square-btn" id="playBtn" onclick="togglePlayPause()" title="إيقاف / تشغيل">⏹</button>
+                <button class="icon-btn" id="prevBtn" onclick="goToPreviousSegment()" title="المقطع السابق">◀</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ربط محرك التشغيل والمنطق البرمجي -->
+    <script src="game01-engine.js"></script>
+</body>
+</html>
+  
