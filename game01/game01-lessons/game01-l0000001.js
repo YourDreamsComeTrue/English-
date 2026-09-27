@@ -1,38 +1,10 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>مشغل الدروس التفاعلي</title>
-    
-    <!-- ربط ملف التنسيقات الخارجية -->
-    <link rel="stylesheet" href="game01-style.css">
-
-    <!-- ربط ملف البيانات من المسار الجديد -->
-    <script src="game01/game01-lessons.js"></script>
-</head>
-<body>
-
-    <div class="player-container" id="playerContainer">
-        <div class="video-wrapper">
-            <div id="player"></div>
-        </div>
-
-        <div class="controls-bar">
-            <div class="status-info" id="statusInfo">جاري التحميل...</div>
-
-            <div class="buttons-group">
-                <button class="icon-btn" id="rotateBtn" onclick="toggleLandscape()" title="عرض أفقي">⛶</button>
-                <button class="icon-btn" id="nextBtn" onclick="goToNextSegment()" title="المقطع التالي">▶</button>
-                <button class="icon-btn" id="repeatBtn" onclick="repeatCurrentSegment()" title="إعادة المقطع الحالي">🔄</button>
-                <button class="icon-btn square-btn" id="playBtn" onclick="togglePlayPause()" title="إيقاف / تشغيل">⏹</button>
-                <button class="icon-btn" id="prevBtn" onclick="goToPreviousSegment()" title="المقطع السابق">◀</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- ربط محرك التشغيل والمنطق البرمجي -->
-    <script src="game01-engine.js"></script>
-</body>
-</html>
-  
+const lessonData = {
+    youtubeUrl: "https://youtube.com/shorts/ZxpWSjuMeMM?si=4QBs5fFCKj3s3dE8",
+    segments: [
+        [0, 5],    // المقطع 1: من الثانية 0 إلى 5
+        [5, 10],   // المقطع 2: من الثانية 5 إلى 10
+        [10, 15],  // المقطع 3: من الثانية 10 إلى 15
+        [15, 20],  // المقطع 4: من الثانية 15 إلى 20
+        [20, 26]   // المقطع 5: من الثانية 20 إلى 26
+    ]
+};
