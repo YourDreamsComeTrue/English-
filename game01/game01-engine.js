@@ -10,10 +10,10 @@ function getLessonNameFromUrl() {
     return urlParams.get('lesson') || 'game01-type01-l0000001';
 }
 
-// تحميل ملف الدرس ديناميكيًا
+// تحميل ملف الدرس ديناميكيًا (تم تصحيح المسار هنا)
 function loadLessonScript(lessonName, callback) {
     const script = document.createElement('script');
-    script.src = `game01/game01-lessons/${lessonName}.js`;
+    script.src = `game01-lessons/${lessonName}.js`;
     script.onload = callback;
     script.onerror = () => {
         document.getElementById('statusInfo').innerText = "خطأ: لم يتم العثور على الدرس المحدد";
@@ -167,4 +167,4 @@ function formatTime(seconds) {
     const mins = Math.floor(seconds / 60);
     const secs = Math.floor(seconds % 60);
     return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
-}
+            }
